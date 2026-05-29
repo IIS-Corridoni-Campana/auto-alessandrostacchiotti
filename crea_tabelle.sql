@@ -1,42 +1,58 @@
--- USA QUESTO FILE PER CREARE LE TABELLE DEL DATABASE
-CREATE TABLE Cliente (
-id int() PRIMARY KEY,
-nome varchar() NOT NULL,
-cognome varchar() NOT NULL,
-data_nascita date() NOT NULL,
-cod_fiscale char() NOT NULL
+CREATE TABLE Costruttore
+(
+  id INT NOT NULL,
+  nome VARCHAR NOT NULL,
+  nazione VARCHAR NOT NULL,
+  citta VARCHAR NOT NULL,
+  PRIMARY KEY (id)
 );
 
-CREATE TABLE Patente (
-id int() PRIMARY KEY,
-tipo char() NOT NULL,
-data_rilascio date() NOT NULL,
-data_scadenza date() NOT NULL,
+CREATE TABLE Automobile
+(
+  id INT NOT NULL,
+  modello VARCHAR NOT NULL,
+  anno_modello DATE NOT NULL,
+  nazione VARCHAR NOT NULL,
+  cilindrata INT NOT NULL,
+  alimentazione VARCHAR NOT NULL,
+  targa CHAR NOT NULL,
+  tipo_auto VARCHAR NOT NULL,
+  disponibile BOOL NOT NULL,
+  co_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (co_id) REFERENCES Costruttore(id)
 );
 
-
-CREATE TABLE Automobile (
-id int() PRIMARY KEY,
-modello varchar() NOT NULL,
-nazione varchar() NOT NULL,
-anno_modello date() NOT NULL,
-cilindrata int() NOT NULL,
-alimentazione varchar() NOT NULL,
-targa char() NOT NULL,
-tipologia_auto varchar() NOT NULL,
-disponibile bool() NOT NULL
+CREATE TABLE Patente
+(
+  id INT NOT NULL,
+  data_rilascio DATE NOT NULL,
+  data_scadenza DATE NOT NULL,
+  tipo VARCHAR NOT NULL,
+  PRIMARY KEY (id)
 );
 
-CREATE TABLE Costruttore (
-id int() PRIMARY KEY,
-nome varchar() NOT NULL,
-nazione varchar() NOT NULL,
-citta varchar() NOT NULL
+CREATE TABLE Cliente
+(
+  id INT NOT NULL,
+  nome VARCHAR NOT NULL,
+  cognome VARCHAR NOT NULL,
+  data_nascita DATE NOT NULL,
+  cod_fiscale CHAR NOT NULL,
+  p_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (p_id) REFERENCES Patente(id)
 );
 
-CREATE TABLE noleggio (
-id int() PRIMARY KEY,
-data_inizio date() NOT NULL,
-data_fine date() NOT NULL,
-costo float() NOT NULL
+CREATE TABLE noleggio
+(
+  id INT NOT NULL,
+  data_inizio DATE NOT NULL,
+  data_fine DATE NOT NULL,
+  costo FLOAT NOT NULL,
+  cl_id INT NOT NULL,
+  a_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (cl_id) REFERENCES Cliente(id),
+  FOREIGN KEY (a_id) REFERENCES Automobile(id)
 );
